@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>YouFree</title>
+</head>
+
+<body>
+  <h1>Dettagli del Ticket</h1>
+  <div id="ticketDetails"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const option = urlParams.get('option');
+    const amount = urlParams.get('amount');
+    const username = urlParams.get('username');
+
+    const ticketDetails = document.getElementById('ticketDetails');
+    ticketDetails.innerHTML = `
+      <p><strong>Opzione:</strong> ${option}</p>
+      <p><strong>Quantità:</strong> ${amount}</p>
+      <p><strong>Username YouTube:</strong> ${username}</p>
+    `;
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>YouFree</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .options {
+      margin-top: 50px;
+    }
+
+    .button {
+      background-color: red;
+      color: white;
+      font-size: 24px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .choice {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .username-form {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .loading {
+      display: none;
+      font-size: 20px;
+      color: green;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="options">
+    <button class="button" onclick="selectOption('Like')">Like</button>
+    <button class="button" onclick="selectOption('Subscribe')">Subscribe</button>
+    <button class="button" onclick="selectOption('Views')">Views</button>
+  </div>
+
+  <div class="choice">
+    <button class="button" onclick="selectAmount(10)">10</button>
+    <button class="button" onclick="selectAmount(20)">20</button>
+    <button class="button" onclick="selectAmount(30)">30</button>
+  </div>
+
+  <div class="username-form">
+    <input type="text" id="username" placeholder="Enter your YouTube username">
+    <button class="button" onclick="sendTicket()">Submit</button>
+  </div>
+
+  <div class="loading">In attesa che un nostro staff prenda il tuo ticket...</div>
+
+  <script>
+    function selectOption(option) {
+      document.querySelector('.options').style.display = 'none';
+      document.querySelector('.choice').style.display = 'block';
+    }
+
+    function selectAmount(amount) {
+      document.querySelector('.choice').style.display = 'none';
+      document.querySelector('.username-form').style.display = 'block';
+    }
+
+function sendTicket() {
+    const option = document.querySelector('.options button').innerText;
+    const amount = document.querySelector('.choice button').innerText;
+    const username = document.getElementById('username').value;
+
+    const ticket = {
+        option: option,
+        amount: amount,
+        username: username
+    };
+
+    // Creazione del payload da inviare al webhook Discord
+    const webhookPayload = {
+        embeds: [{
+            title: "Nuovo ticket YouTube",
+            color: 0xFF5733, // Colore personalizzabile
+            fields: [
+                { name: "Opzione", value: option },
+                { name: "Quantità", value: amount },
+                { name: "Username", value: username }
+            ]
+        }]
+    };
+
+    // Invio del payload al webhook Discord
+    fetch('https://discord.com/api/webhooks/1239241476018409482/zWYj63ZmMqzdQGqf8DUvT-9fLVcH2W7AScJWRLz6yhlsuUrzwpVsomm3NtWoD6vgHHEQ', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(webhookPayload)
+    }).then(response => {
+        // Una volta che il webhook è stato inviato con successo, reindirizzare alla pagina adminpanel.html
+        const queryString = new URLSearchParams(ticket).toString();
+        window.location.href = `adminpanel.html?${queryString}`;
+    }).catch(error => {
+        console.error('Errore nell\'invio del webhook:', error);
+        // In caso di errore nell'invio del webhook, visualizzare un messaggio all'utente o gestire l'errore in altro modo
+    });
+      }
+          
+  </script>
+</body>
+
+</html>

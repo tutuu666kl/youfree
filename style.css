@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+.intro {
+  position: relative;
+}
+
+.intro-image {
+  display: none;
+  animation: fadeinout 4s infinite;
+}
+
+@keyframes fadeinout {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.title {
+  font-size: 2em;
+  margin-top: 20px;
+  color: #333;
+}
+
+.teleport-link {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.teleport-link:hover {
+  text-decoration: underline;
+}
